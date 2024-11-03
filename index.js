@@ -19,7 +19,8 @@ function saveTasks(tasks) {
 
 function addTask(taskName) {
     const tasks = loadTasks();
-    const newTask = { id: tasks.length + 1, name: taskName, status: 'todo' };
+    const latestTaskID = tasks[tasks.length-1].id
+    const newTask = { id: latestTaskID + 1, name: taskName, status: 'todo' };
     tasks.push(newTask);
     saveTasks(tasks);
     console.log(`Task added successfully (ID: ${newTask.id})`);
@@ -57,6 +58,18 @@ function deleteTask(id) {
     saveTasks(tasks);
     if (tasks.length < initialLength) {
         console.log('Task deleted successfully');
+    } else {
+        console.log('Task not found');
+    }
+}
+
+function markTask(id, status) {
+    const tasks = loadTasks();
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+        task.status = status;
+        saveTasks(tasks);
+        console.log(`Task marked as ${status}`);
     } else {
         console.log('Task not found');
     }

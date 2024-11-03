@@ -2,6 +2,11 @@
   {
     "id": 2,
     "name": "GET UP EARLY IN THE MORNING",
-    "status": "todo"
+    "status": "done"
+  },
+  {
+    "id": 3,
+    "name": "Buy a cigarete",
+    "status": "in-progress"
   }
 ]
