@@ -49,6 +49,19 @@ function updateTask(id, newName) {
     }
 }
 
+// Function to delete a task
+function deleteTask(id) {
+    let tasks = loadTasks();
+    const initialLength = tasks.length;
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks(tasks);
+    if (tasks.length < initialLength) {
+        console.log('Task deleted successfully');
+    } else {
+        console.log('Task not found');
+    }
+}
+
 const [,, command, ...args] = process.argv;
 
 switch (command) {
