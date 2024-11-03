@@ -20,7 +20,13 @@ function saveTasks(tasks) {
 function addTask(taskName) {
     const tasks = loadTasks();
     const latestTaskID = tasks[tasks.length-1].id
-    const newTask = { id: latestTaskID + 1, name: taskName, status: 'todo' };
+    const newTask = { 
+        id: latestTaskID + 1, 
+        name: taskName, 
+        status: 'todo',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(), 
+    };
     tasks.push(newTask);
     saveTasks(tasks);
     console.log(`Task added successfully (ID: ${newTask.id})`);
@@ -38,11 +44,13 @@ function listTasks(status = null) {
     }
 }
 
+
 function updateTask(id, newName) {
     const tasks = loadTasks();
     const task = tasks.find(t => t.id === id);
     if (task) {
         task.name = newName;
+        task.updatedAt = new Date().toISOString();
         saveTasks(tasks);
         console.log('Task updated successfully');
     } else {
@@ -68,6 +76,7 @@ function markTask(id, status) {
     const task = tasks.find(t => t.id === id);
     if (task) {
         task.status = status;
+        task.updatedAt = new Date().toISOString(); // Update timestamp
         saveTasks(tasks);
         console.log(`Task marked as ${status}`);
     } else {
