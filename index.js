@@ -25,20 +25,28 @@ function addTask(taskName) {
     console.log(`Task added successfully (ID: ${newTask.id})`);
 }
 
-// Function to list all tasks
-function listTasks(rl) {
+function listTasks(status = null) {
     const tasks = loadTasks();
-    if (tasks.length === 0) {
-        console.log('No tasks found.\n');
+    const filteredTasks = status ? tasks.filter(t => t.status === status) : tasks;
+    if (filteredTasks.length === 0) {
+        console.log('No tasks found.');
     } else {
-        console.log('Tasks:');
-        tasks.forEach((task, index) => {
-            const status = task.completed ? '[✓]' : '[ ]';
-            console.log(`${index + 1}. ${task.name} ${status}`);
+        filteredTasks.forEach(task => {
+            console.log(`ID: ${task.id} | ${task.name} | Status: ${task.status}`);
         });
-        console.log();
     }
-    mainMenu(rl);
+}
+
+function updateTask(id, newName) {
+    const tasks = loadTasks();
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+        task.name = newName;
+        saveTasks(tasks);
+        console.log('Task updated successfully');
+    } else {
+        console.log('Task not found');
+    }
 }
 
 const [,, command, ...args] = process.argv;
